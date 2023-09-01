@@ -5,6 +5,12 @@
 - Docker
 - Docker Compose plugin at least __3.8__
 
+First copy dotEnv configuration file
+
+``` bash
+cp .env.example .env
+```
+
 ************************
 
 __This application is containerized__
