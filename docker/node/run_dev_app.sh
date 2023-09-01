@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/usr/bin/env ash
 until cd /usr/local/app; do
     echo 'Waiting for app mount...'
 done
