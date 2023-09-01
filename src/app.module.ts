@@ -5,6 +5,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { DatabaseConfig } from './common/database/database.config';
 import { TransactionsModule } from './transactions/transactions.module';
+import { EtherscanModule } from './etherscan/etherscan.module';
 
 @Module({
   imports: [
@@ -19,6 +20,7 @@ import { TransactionsModule } from './transactions/transactions.module';
     CronJobModule,
     UserModule,
     TransactionsModule,
+    EtherscanModule,
   ],
 })
 export class AppModule {}
