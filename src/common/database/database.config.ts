@@ -32,7 +32,7 @@ export class DatabaseConfig implements TypeOrmOptionsFactory {
       migrations: [
         join(__dirname, '..', '..', 'migrations', '**', '*.{ts,js}'),
       ],
-      synchronize: false,
+      synchronize: true,
       logging: true,
     };
   }

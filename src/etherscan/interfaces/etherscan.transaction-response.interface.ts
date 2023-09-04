@@ -1,4 +1,6 @@
-interface TransactionResponseInterface {
+import { EtherscanCommonResponseInterface } from './etherscan.common-response.interface';
+
+export interface TransactionResponseInterface {
   hash: string;
   nonce: string;
   blockHash: string;
@@ -38,3 +40,6 @@ export interface EtherscanTransactionResponseInterface {
   transactions: TransactionResponseInterface[];
   uncles: string[];
 }
+
+export type EtherscanTransactionResponseInterfaceType =
+  EtherscanCommonResponseInterface<EtherscanTransactionResponseInterface>;

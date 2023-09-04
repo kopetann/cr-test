@@ -2,9 +2,20 @@ import { Column, Entity } from 'typeorm';
 import { CommonEntity } from '../../common/entities/common.entity';
 
 @Entity('transactions')
-export class TransactionsEntity extends CommonEntity {
+export class TransactionEntity extends CommonEntity {
   @Column({
-    unique: true,
+    nullable: true,
   })
-  externalId: number;
+  blockId: number;
+
+  @Column()
+  from: string;
+
+  @Column()
+  to: string;
+
+  @Column({
+    type: 'bigint',
+  })
+  value: number;
 }

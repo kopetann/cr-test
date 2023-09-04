@@ -1,10 +1,14 @@
 import { Injectable } from '@nestjs/common';
-import { TransactionsService } from '../../transactions/services/transactions.service';
+import { TransactionService } from '../../transaction/services/transaction.service';
 import { Cron } from '@nestjs/schedule';
+import { ConfigService } from '@nestjs/config';
 
 @Injectable()
 export class CronJobService {
-  constructor(private readonly transactionService: TransactionsService) {}
+  constructor(
+    private readonly transactionService: TransactionService,
+    private readonly configService: ConfigService,
+  ) {}
 
   @Cron('0 * * * * *')
   public updateTransactionsCron() {

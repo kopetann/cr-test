@@ -1,10 +1,10 @@
 import { Module } from '@nestjs/common';
 import { ScheduleModule } from '@nestjs/schedule';
 import { CronJobService } from './services/cron-job.service';
-import { TransactionsModule } from '../transactions/transactions.module';
+import { TransactionModule } from '../transaction/transaction.module';
 
 @Module({
-  imports: [ScheduleModule.forRoot(), TransactionsModule],
+  imports: [ScheduleModule.forRoot(), TransactionModule],
   providers: [CronJobService],
   exports: [CronJobService],
 })

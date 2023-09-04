@@ -1,7 +1,10 @@
 import { Injectable, InternalServerErrorException } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { Utils } from '../../common/utils/utils';
-import { EtherscanTransactionResponseInterface } from '../interfaces/etherscan.transaction-response.interface';
+import {
+  EtherscanTransactionResponseInterface,
+  TransactionResponseInterface,
+} from '../interfaces/etherscan.transaction-response.interface';
 import { EtherscanCommonResponseInterface } from '../interfaces/etherscan.common-response.interface';
 
 @Injectable()
@@ -24,7 +27,30 @@ export class EtherscanService {
     this.checkConnection();
   }
 
-  public get<T>(
+  public getLastBlockNumber() {
+    return this.get<EtherscanTransactionResponseInterface>('api', {
+      module: 'proxy',
+      action: 'eth_blockNumber',
+    });
+  }
+
+  public async getTransactionsByBlockId(
+    blockId: number,
+  ): Promise<TransactionResponseInterface[]> {
+    const tag = '0x' + Number(blockId).toString(16);
+    const res = await this.get<EtherscanTransactionResponseInterface>('api', {
+      module: 'proxy',
+      action: 'eth_getBlockByNumber',
+      tag,
+      boolean: 'true',
+    });
+
+    if (!res.result || !res.result.transactions) return [];
+
+    return res.result.transactions;
+  }
+
+  private async get<T>(
     endpoint: string,
     query?: Record<string, string>,
   ): Promise<EtherscanCommonResponseInterface<T>> {
@@ -34,16 +60,10 @@ export class EtherscanService {
       addr += '?' + Utils.convertQueryParams(query);
     }
 
-    return fetch(addr, {
+    const res = await fetch(addr, {
       ...this.fetchOptions,
-    }).then((res) => res.json());
-  }
-
-  public getLastBlockNumber() {
-    return this.get<EtherscanTransactionResponseInterface>('api', {
-      module: 'proxy',
-      action: 'eth_blockNumber',
     });
+    return await res.json();
   }
 
   private checkConnection() {
